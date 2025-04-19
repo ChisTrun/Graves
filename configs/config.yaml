@@ -1,0 +1,19 @@
+server:
+  host: 0.0.0.0
+  port: 8080
+
+payos: 
+  api_key: ${PAYOS_API_KEY}
+  client_id: ${PAYOS_CLIENT_ID}
+  checksum_key: ${PAYOS_CHECKSUM_KEY}
+  cancel_url: https://api.payos.com
+  success_url: https://api.payos.com
+  timeout: 300 #seconds
+
+database:
+  host: ${DATABASE_HOST}
+  port: 3306
+  name: ${DATABASE_NAME}
+  username: ${DATABASE_USERNAME}
+  password: ${DATABASE_PASSWORD}
+  
