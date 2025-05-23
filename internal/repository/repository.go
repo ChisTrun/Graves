@@ -11,8 +11,9 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 
-	"github.com/golang-migrate/migrate/v4/database/postgres"
+	mysqlDriver "github.com/golang-migrate/migrate/v4/database/mysql"
 	"github.com/payOSHQ/payos-lib-golang"
 )
 
@@ -55,14 +56,14 @@ func GetInstance() (Repository, error) {
 			return
 		}
 
-		driver, err := postgres.WithInstance(db, &postgres.Config{})
+		driver, err := mysqlDriver.WithInstance(db, &mysqlDriver.Config{})
 		if err != nil {
 			onceErr = err
 			return
 		}
 
 		m, err := migrate.NewWithDatabaseInstance(
-			"file://migrations",
+			"file://sql/migrations",
 			cfg.DataBase.Name, driver)
 		if err != nil {
 			onceErr = err
