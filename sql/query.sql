@@ -15,6 +15,11 @@ FROM Orders
 WHERE UserId = ?
     AND ID = ?
 LIMIT 1;
+-- name: GetOrderByOrderId :one
+SELECT *
+FROM Orders
+WHERE ID = ?
+LIMIT 1;
 -- name: UpdateOrderStatus :exec
 UPDATE Orders
 SET Status = ?

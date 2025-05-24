@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"graves/internal/connect/bulbasaur"
 	"graves/internal/repository"
 	"graves/pkg/logger/pkg/logging"
 	"graves/pkg/payos"
@@ -20,6 +21,8 @@ func VerifyPaymentWebhookData(c *gin.Context) {
 	body, _ := io.ReadAll(c.Request.Body)
 
 	p := payos.GetInstance()
+
+	bulbasaur := bulbasaur.GetInstance()
 
 	err := json.Unmarshal(body, &webhookDataReq)
 	if err != nil {
@@ -44,10 +47,25 @@ func VerifyPaymentWebhookData(c *gin.Context) {
 			logging.Logger(ctx).Error(fmt.Sprintf("Failed to get repository instance: %v", err))
 			return
 		}
+
+		order, err := repo.GetOrderByOrderId(ctx, int32(detailData.OrderCode))
+		if err != nil {
+			logging.Logger(ctx).Error(fmt.Sprintf("Failed to get order by order ID: %v", err))
+			return
+		}
+
 		if err := repo.UpdateOrderStatus(ctx, int32(detailData.OrderCode), detailData.Status); err != nil {
 			logging.Logger(ctx).Error(fmt.Sprintf("Failed to update order status: %v", err))
 			return
 		}
+
+		if detailData.Status == "PAID" {
+			if err := bulbasaur.IncreaseBalance(ctx, uint64(order.Userid), float32(detailData.Amount)); err != nil {
+				logging.Logger(ctx).Error(fmt.Sprintf("Failed to increase balance: %v", err))
+				return
+			}
+		}
+
 	}(context.Background())
 	c.JSON(http.StatusOK, webhookData)
 }

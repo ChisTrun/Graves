@@ -100,3 +100,7 @@ func (r *repository) GetOrderById(ctx context.Context, userId uint64, orderId in
 		ID:     orderId,
 	})
 }
+
+func (r *repository) GetOrderByOrderId(ctx context.Context, orderId int32) (models.Order, error) {
+	return r.queries.GetOrderByOrderId(ctx, orderId)
+}

@@ -17,6 +17,7 @@ require (
 	github.com/payOSHQ/payos-lib-golang v1.0.7
 	github.com/vrischmann/envconfig v1.4.1
 	go.uber.org/zap v1.27.0
+	google.golang.org/genproto/googleapis/api v0.0.0-20250106144421-5f5ef82da422
 	google.golang.org/grpc v1.71.1
 	google.golang.org/protobuf v1.36.6
 	gopkg.in/DataDog/dd-trace-go.v1 v1.72.2

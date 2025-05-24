@@ -22,6 +22,7 @@ type Repository interface {
 	UpdateOrderStatus(ctx context.Context, orderId int32, status string) error
 	ListOrders(ctx context.Context, userId uint64, req dto.ListOrders) ([]models.Order, error)
 	GetOrderById(ctx context.Context, userId uint64, orderId int32) (models.Order, error)
+	GetOrderByOrderId(ctx context.Context, orderId int32) (models.Order, error)
 }
 
 type repository struct {
@@ -83,5 +84,3 @@ func GetInstance() (Repository, error) {
 	})
 	return repositoryInstance, onceErr
 }
-
-

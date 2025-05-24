@@ -1,9 +1,10 @@
 package config
 
 type Config struct {
-	Payos    *Payos    `json:"payos"`
-	Server   *Server   `json:"server"`
-	DataBase *DataBase `json:"database"`
+	Payos     *Payos    `json:"payos"`
+	Server    *Server   `json:"server"`
+	DataBase  *DataBase `json:"database"`
+	Bulbasaur *Server   `json:"bulbasaur"`
 }
 
 type Server struct {

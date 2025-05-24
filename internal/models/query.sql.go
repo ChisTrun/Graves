@@ -46,6 +46,30 @@ func (q *Queries) CreateOrders(ctx context.Context, arg CreateOrdersParams) erro
 	return err
 }
 
+const getOrderByOrderId = `-- name: GetOrderByOrderId :one
+SELECT id, userid, amount, accountnumber, currency, description, createdat, updatedat, status
+FROM Orders
+WHERE ID = ?
+LIMIT 1
+`
+
+func (q *Queries) GetOrderByOrderId(ctx context.Context, id int32) (Order, error) {
+	row := q.db.QueryRowContext(ctx, getOrderByOrderId, id)
+	var i Order
+	err := row.Scan(
+		&i.ID,
+		&i.Userid,
+		&i.Amount,
+		&i.Accountnumber,
+		&i.Currency,
+		&i.Description,
+		&i.Createdat,
+		&i.Updatedat,
+		&i.Status,
+	)
+	return i, err
+}
+
 const getOrderByUserId = `-- name: GetOrderByUserId :one
 SELECT id, userid, amount, accountnumber, currency, description, createdat, updatedat, status
 FROM Orders
