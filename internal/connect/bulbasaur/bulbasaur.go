@@ -51,6 +51,8 @@ func init() {
 
 	client := NewVenusaurClient(conn)
 
+	logging.Logger(ctx).Info(fmt.Sprintf("Bulbasaur client connected to %s", *serverAddr))
+
 	instaccnce = &bulbasaur{client: client}
 }
 
