@@ -38,6 +38,7 @@ func init() {
 	}
 
 	serverAddr := flag.String("addr", fmt.Sprintf("%v:%v", cfg.Bulbasaur.Host, cfg.Bulbasaur.Port), "The server address in the format of host:port")
+
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}

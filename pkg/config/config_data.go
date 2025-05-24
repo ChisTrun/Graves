@@ -8,7 +8,7 @@ type Config struct {
 }
 
 type Server struct {
-	Host string `json:"hosts"`
+	Host string `json:"host"`
 	Port int    `json:"port"`
 }
 
