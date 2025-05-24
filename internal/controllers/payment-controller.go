@@ -61,7 +61,7 @@ func VerifyPaymentWebhookData(c *gin.Context) {
 
 		if detailData.Status == "PAID" {
 			if err := bulbasaur.IncreaseBalance(ctx, uint64(order.Userid), float32(detailData.Amount)); err != nil {
-				logging.Logger(ctx).Error(fmt.Sprintf("Failed to increase balance: %v", err))
+				logging.Logger(ctx).Error(fmt.Sprintf("Failed to increase balance userId %v amount %v: %v", order.Userid, order.Amount, err))
 				return
 			}
 		}
